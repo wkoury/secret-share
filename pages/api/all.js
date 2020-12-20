@@ -1,8 +1,8 @@
-import sqlite3 from "sqlite3";
 import { openDB, closeDB } from "../../utils/db";
 
-export default function all(req, res) {
-	let db = openDB();
-	const secrets = db.all("select * from Secrets");
+export default async function all(req, res) {
+	let db = await openDB();
+	const secrets = await db.get("SELECT * from Secrets");
+	await closeDB(db);
 	res.json(secrets);
 }

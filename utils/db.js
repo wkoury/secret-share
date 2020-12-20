@@ -24,15 +24,15 @@ const closeDB = db => {
 	return true;
 }
 
-const createSecret = (secret, uuid) => {
-	let db = openDB();
-	db.run(`INSERT into Secrets (secret, uuid) values ("${secret}", "${uuid}");`);
-	closeDB(db);
+const createSecret = async (secret, uuid) => {
+	let db = await openDB();
+	await db.run(`INSERT into Secrets (secret, uuid) values ("${secret}", "${uuid}");`);
+	await closeDB(db);
 }
 
-const getSecret = (uuid) => {
+const getSecret = async (uuid) => {
 	//every time you get a secret, it must be destroyed
-	let db = openDB();
+	let db = await openDB();
 	let sql = `SELECT secret FROM Secrets WHERE uuid = "${uuid}"`;
 
 	return new Promise(function(resolve, reject) {
