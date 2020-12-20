@@ -2,7 +2,6 @@ import Head from "next/head";
 import React, { useState } from "react";
 import Footer from "../components/Footer";
 import styles from "../styles/Home.module.css";
-const copy = require('copy-text-to-clipboard');
 
 export default function Receive() {
   const [uuid, setUuid] = useState("");
@@ -34,6 +33,10 @@ export default function Receive() {
     });
   }
 
+  const copy = () => {
+    navigator.clipboard.writeText(secret);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -48,18 +51,27 @@ export default function Receive() {
             <React.Fragment>
               <h3>Your secret is:</h3>
               <h2 onClick={() => copy(secret)}>{secret}</h2>
+              <button 
+                className={styles.submit}
+                onClick={() => copy()}
+              >
+                Copy
+              </button>
             </React.Fragment>
           )
           :
           (
             <React.Fragment>
+              <p>Enter your retrieval code.</p>
               <input
-                type="text"
+                className={styles.input}
+                type="password"
                 value={uuid}
                 onChange={e => handleChange(e)}
               >
               </input>
               <button
+                className={styles.submit}
                 onClick={() => submit()}
               >
                 Submit

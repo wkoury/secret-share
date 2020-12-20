@@ -12,6 +12,7 @@ export default function Send() {
   }
 
   const submit = async () => {
+    if(!secret) { return 0 }
     fetch("/api/send", {
       method: "POST",
       headers: {
@@ -33,8 +34,11 @@ export default function Send() {
       if(data){
         setUuid(data.uuid);
       }
-    });
-    
+    }); 
+  }
+
+  const copy = () => {
+    navigator.clipboard.writeText(uuid);
   }
 
   return (
@@ -47,17 +51,30 @@ export default function Send() {
       <main className={styles.main}>
         {uuid 
           ? 
-            <h3>Your secret retrieval code is {uuid}.</h3>
+          (
+            <React.Fragment>
+              <h3>Your secret retrieval code is {uuid}.</h3>
+              <button 
+                className={styles.submit}
+                onClick={() => copy()}
+              >
+                Copy
+              </button>
+            </React.Fragment>
+          )
           : 
           (
           <React.Fragment>
+            <p>Enter the text you would like to share. Submit to get your retrieval code.</p>
             <input
-              type="text"
+              className={styles.input}
+              type="password"
               value={secret}
               onChange={e => handleChange(e)}
             >
             </input>
-            <button
+            <button 
+              className={styles.submit}
               onClick={() => submit()}
             >
               Submit
