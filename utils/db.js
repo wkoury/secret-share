@@ -55,4 +55,4 @@ const getSecret = (uuid) => {
 }
 
 //export functions
-module.exports = { createSecret, getSecret };
+module.exports = { createSecret, getSecret, openDB, closeDB };
