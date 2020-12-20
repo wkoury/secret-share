@@ -6,6 +6,7 @@ import styles from "../styles/Home.module.css";
 export default function Send() {
   const [secret, setSecret] = useState("");
   const [uuid, setUuid] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const handleChange = event => {
     setSecret(event.target.value);
@@ -39,6 +40,9 @@ export default function Send() {
 
   const copy = () => {
     navigator.clipboard.writeText(uuid);
+    setCopied(true);
+    setUuid("");
+    setSecret("");
   }
 
   return (
@@ -53,7 +57,7 @@ export default function Send() {
           ? 
           (
             <React.Fragment>
-              <h3>Your secret retrieval code is {uuid}.</h3>
+              {!copied && <h3>Your secret retrieval code is {uuid}.</h3>}
               <button 
                 className={styles.submit}
                 onClick={() => copy()}

@@ -6,6 +6,7 @@ import styles from "../styles/Home.module.css";
 export default function Receive() {
   const [uuid, setUuid] = useState("");
   const [secret, setSecret] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const handleChange = event => {
     setUuid(event.target.value);
@@ -27,7 +28,6 @@ export default function Receive() {
           alert("This secret does not appear to exist!");
           return;
         }
-        console.log(data);
         setSecret(data.secret);
       }
     });
@@ -35,6 +35,9 @@ export default function Receive() {
 
   const copy = () => {
     navigator.clipboard.writeText(secret);
+    setCopied(true);
+    setUuid("");
+    setSecret("");
   }
 
   return (
@@ -49,8 +52,12 @@ export default function Receive() {
           ?
           (
             <React.Fragment>
-              <h3>Your secret is:</h3>
-              <h2 onClick={() => copy(secret)}>{secret}</h2>
+              {!copied && (
+                <React.Fragment>
+                  <h3>Your secret is:</h3>
+                  <h2>{secret}</h2>
+                </React.Fragment>
+              )}
               <button 
                 className={styles.submit}
                 onClick={() => copy()}
@@ -84,4 +91,8 @@ export default function Receive() {
       <Footer />
     </div>
   )
+}
+
+const SecretDisplay = secret => {
+  return;
 }
