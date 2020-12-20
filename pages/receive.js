@@ -24,6 +24,11 @@ export default function Receive() {
     })
     .then(data => {
       if(data){
+        if(data.DNE === true){
+          alert("This secret does not appear to exist!");
+          return;
+        }
+        console.log(data);
         setSecret(data.secret);
       }
     });
